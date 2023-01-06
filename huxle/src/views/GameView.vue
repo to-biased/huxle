@@ -1,27 +1,31 @@
 <template>
-  <div class="flex flex-col h-screen max-w-md mx-auto jsutify-evenly">
-    <h1 class="text-center font-bold text-xl">Huxle!</h1>
-    <word-row
-      v-for="(guess, i) in gameStore.getGuesses"
-      :key="i"
-      :value="guess"
-      :prompt="gameStore.getPrompt"
-      :submitted="i < gameStore.getGuessIndex"
-    />
-    <simple-keyboard
-      @onKeyPress="handleInput"
-      :letters="gameStore.getLetters"
-    />
+  <div>
+    <victory-modal :finished="gameStore.isFinished" :win="gameStore.isWin" />
+    <div class="flex flex-col h-screen max-w-md mx-auto jsutify-evenly">
+      <h1 class="text-center font-bold text-xl">Huxle!</h1>
+      <word-row
+        v-for="(guess, i) in gameStore.getGuesses"
+        :key="i"
+        :value="guess"
+        :prompt="gameStore.getPrompt"
+        :submitted="i < gameStore.getGuessIndex"
+      />
+      <simple-keyboard
+        @onKeyPress="handleInput"
+        :letters="gameStore.getLetters"
+      />
+    </div>
   </div>
 </template>
 <script setup lang="ts">
 import { onMounted, watch } from "vue";
 import SimpleKeyboard from "../components/SimpleKeyboard.vue";
+import VictoryModal from "../components/VictoryModal.vue";
 import WordRow from "../components/WordRow.vue";
 import { useGameStore, type GameState } from "../store/game";
 
 const gameStore = useGameStore();
-gameStore.setPrompt("hello"); // later get this from link by dehashing
+gameStore.setPrompt("sicki"); // later get this from link by dehashing
 
 // onload actions and listener for hardware keyboard input
 onMounted(() => {
@@ -49,7 +53,7 @@ onMounted(() => {
 watch(
   gameStore,
   (gameStore) => {
-    if(gameStore.isFinished) return;
+    if (gameStore.isFinished) return;
     localStorage.setItem("game", JSON.stringify(gameStore.getGameState));
   },
   { deep: true }
@@ -92,8 +96,10 @@ const handleInput = (key: string) => {
         gameStore.win();
         localStorage.removeItem("game");
         console.log("You won!");
-      }
-      else if (gameStore.getGuessIndex == 6 && currentGuess != gameStore.getPrompt) {        
+      } else if (
+        gameStore.getGuessIndex == 6 &&
+        currentGuess != gameStore.getPrompt
+      ) {
         gameStore.lose();
         localStorage.removeItem("game");
         console.log("You lost!");

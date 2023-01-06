@@ -11,6 +11,8 @@ export type GameState = {
   guesses: string[];
   guessIndex: number;
   letters: ColoredLetters;
+  win: boolean;
+  lose: boolean;
 };
 
 export const useGameStore = defineStore("game", {
@@ -20,6 +22,8 @@ export const useGameStore = defineStore("game", {
       guesses: ["", "", "", "", "", ""],
       guessIndex: 0,
       letters: { gray: [], yellow: [], green: [] },
+      win: false,
+      lose: false,
     } as GameState,
   }),
   getters: {
@@ -38,10 +42,22 @@ export const useGameStore = defineStore("game", {
     getLetters(): ColoredLetters {
       return this.gameState.letters;
     },
+    isFinished(): boolean {
+      return this.gameState.win || this.gameState.lose;
+    },
+    isWin(): boolean {
+      return this.gameState.win;
+    }
   },
   actions: {
     setGameState(gameState: GameState) {
       this.gameState = gameState;
+    },
+    win() {
+      this.gameState.win = true;
+    },
+    lose() {
+      this.gameState.lose = true;
     },
     setPrompt(prompt: string) {
       this.gameState.prompt = prompt;
