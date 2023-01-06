@@ -1,6 +1,5 @@
 <template>
-  <div class="flex flex-col h-screen max-w-md mx-auto jsutify-evenly">
-    <h1 class="text-center font-bold text-xl">Huxle!</h1>
+  <div class="flex flex-col h-screen max-w-md mx-auto pt-28">
     <word-row
       v-for="(guess, i) in state.guesses"
       :key="i"
