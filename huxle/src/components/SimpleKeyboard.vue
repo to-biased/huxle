@@ -19,7 +19,7 @@ interface SimpleKeyboard {
 }
 */
 
-const keyboard = ref(null);
+const keyboard = ref<Keyboard>();
 
 const onKeyPress = (button: string) => {
   emit("onKeyPress", button);
@@ -45,16 +45,16 @@ onMounted(() => {
 watch(
   () => props.letters,
   (letters) => {
-    if (keyboard != null && keyboard.value != null) {
-      keyboard.value.addButtonTheme(letters.gray.join(" "), "gray"),
-        keyboard.value.addButtonTheme(letters.yellow.join(" "), "yellow"),
-        keyboard.value.addButtonTheme(letters.green.join(" "), "green");
+    if (keyboard.value != null && keyboard.value != null) {
+      keyboard.value.addButtonTheme(letters?.gray.join(" "), "gray"),
+        keyboard.value.addButtonTheme(letters?.yellow.join(" "), "yellow"),
+        keyboard.value.addButtonTheme(letters?.green.join(" "), "green");
     }
   },
   { deep: true }
 );
 </script>
-<style>
+<style lang="postcss">
 div.green {
   @apply bg-green-500 !important;
   @apply text-white !important;

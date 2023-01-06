@@ -3,7 +3,7 @@
     <letter-container
       v-for="i in 5"
       :key="i"
-      :letter="value[i - 1]"
+      :letter="value![i - 1]"
       :color="colors[i - 1]"
     />
   </div>
@@ -32,7 +32,7 @@ watch(
         if (solution?.charAt(i) == guess?.charAt(i)) {
           temp[i] = "green";
         } else {
-          letterPool.push(solution?.charAt(i)); 
+          letterPool.push(solution?.charAt(i));
         }
       }
       for (let i = 0; i < 5; i++) {
