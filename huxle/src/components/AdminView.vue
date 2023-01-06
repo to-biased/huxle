@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { onMounted, reactive, ref, watch } from "vue";
-import ApplicationHeader from "../components/ApplicationHeader.vue";
+import { reactive, ref, watch } from "vue";
+import { useEncryption } from "../composables/encryption";
 
 const formState = reactive({
   germanword: "",
@@ -12,7 +12,11 @@ const englishError = ref<string>("");
 
 var errorCount: number = 0;
 
-function onSubmit() {
+const { encrypt, decrypt } = useEncryption();
+
+async function onSubmit(e:MouseEvent) 
+{ 
+  e.preventDefault();
   console.log("Submit Event happened.");
 
   if (!formState.germanword) {
@@ -42,20 +46,33 @@ function onSubmit() {
   if (errorCount != 0) {
     return;
   }
+
+  var combination: string = formState.germanword + formState.englishword;
+  console.log(combination);
+  var encryptedMessage = encrypt(combination);
+  console.log(encryptedMessage);
+  var decryptedMessage = decrypt(encryptedMessage);
+  console.log(decryptedMessage);
+  germanError.value = decryptedMessage;
 }
 
-watch(() => formState.germanword, (germanWord) => {
+watch(
+  () => formState.germanword,
+  (germanWord) => {
     if (germanError.value) {
-        germanError.value = "";
-    };
-});
+      germanError.value = "";
+    }
+  }
+);
 
-watch(() => formState.englishword, (englishWord) => {
+watch(
+  () => formState.englishword,
+  (englishWord) => {
     if (englishError.value) {
-        englishError.value = "";
-    };
-});
-
+      englishError.value = "";
+    }
+  }
+);
 </script>
 
 <template>
@@ -64,7 +81,7 @@ watch(() => formState.englishword, (englishWord) => {
       To start a german game, please change the language on the right side of
       the header
     </p>
-    <form @submit.prevent="onSubmit" class="flex flex-col gap-4 mt-5">
+    <form @submit.prevent="async() => onSubmit" class="flex flex-col gap-4 mt-5">
       <div>
         <label for="germanword">German Word</label>
         <input
@@ -88,7 +105,7 @@ watch(() => formState.englishword, (englishWord) => {
       </div>
 
       <button
-        @click="onSubmit()"
+        @click="onSubmit"
         type="submit"
         class="rounded border border-gray-500 px-2 py-1 hover:opacity-60"
       >
