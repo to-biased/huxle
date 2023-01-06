@@ -15,14 +15,15 @@
   </div>
 </template>
 <script setup lang="ts">
-import { onMounted, reactive } from "vue";
+import { onMounted, watch } from "vue";
 import SimpleKeyboard from "../components/SimpleKeyboard.vue";
 import WordRow from "../components/WordRow.vue";
-import { useGameStore } from "../store/game";
+import { useGameStore, type GameState } from "../store/game";
 
 const gameStore = useGameStore();
+gameStore.setPrompt("hello"); // later get this from link by dehashing
 
-// add event listener to also utilize hardware keyboard input
+// onload actions and listener for hardware keyboard input
 onMounted(() => {
   // handle input from hardware keyboard
   window.addEventListener("keyup", (e) => {
@@ -35,13 +36,30 @@ onMounted(() => {
         : String.fromCharCode(e.keyCode).toLowerCase();
     handleInput(key);
   });
+  //if localstorage has game, set it to gameStore
+  const game = localStorage.getItem("game");
+  if (game != null) {
+    let safeGame = JSON.parse(game) as GameState;
+    console.log(safeGame);
+    gameStore.setGameState(safeGame);
+  }
 });
+
+// watch and persist the game state to the local storage whenever it changes
+watch(
+  gameStore,
+  (gameStore) => {
+    if(gameStore.isFinished) return;
+    localStorage.setItem("game", JSON.stringify(gameStore.getGameState));
+  },
+  { deep: true }
+);
 
 // handle input from software and hardware keyboard
 const handleInput = (key: string) => {
   console.log(key);
-  //TODO: set input to state for game
-  if (gameStore.getGuessIndex >= 6) {
+  //Guard clause if game is finished or Guesses are full
+  if (gameStore.getGuessIndex >= 6 || gameStore.isFinished) {
     return;
   }
   const currentGuess = gameStore.getCurrentGuess() ?? "";
@@ -68,6 +86,17 @@ const handleInput = (key: string) => {
           gameStore.addGrayLetter(letter);
           console.log("gray");
         }
+      }
+      // check if game has endet -> won or lost
+      if (currentGuess == gameStore.getPrompt) {
+        gameStore.win();
+        localStorage.removeItem("game");
+        console.log("You won!");
+      }
+      else if (gameStore.getGuessIndex == 6 && currentGuess != gameStore.getPrompt) {        
+        gameStore.lose();
+        localStorage.removeItem("game");
+        console.log("You lost!");
       }
     }
   } else if (currentGuess.length < 5) {
