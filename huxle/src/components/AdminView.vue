@@ -78,12 +78,11 @@ watch(
 <template>
   <div class="flex flex-col h-screen max-w-md mx-auto pt-28">
     <p>
-      To start a german game, please change the language on the right side of
-      the header
+      {{$t("adminForm.startText")}}
     </p>
     <form @submit.prevent="async() => onSubmit" class="flex flex-col gap-4 mt-5">
       <div>
-        <label for="germanword">German Word</label>
+        <label for="germanword">{{$t("adminForm.de.label")}}</label>
         <input
           id="germanword"
           type="text"
@@ -94,7 +93,7 @@ watch(
       </div>
 
       <div>
-        <label for="englishword">English Word</label>
+        <label for="englishword">{{$t("adminForm.en.label")}}</label>
         <input
           id="englishword"
           type="text"
@@ -109,7 +108,7 @@ watch(
         type="submit"
         class="rounded border border-gray-500 px-2 py-1 hover:opacity-60"
       >
-        Create Link
+        {{$t("adminForm.create.label")}}
       </button>
     </form>
   </div>

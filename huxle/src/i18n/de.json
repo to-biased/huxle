@@ -11,13 +11,20 @@
             "label": "Neues Huxle erstellen"
         },
         "de": {
-            "label": "Deutsch"
+            "label": "Deutsches Wort"
         },
         "en": {
-            "label": "Englisch"
+            "label": "Englisches Wort"
         },
         "create": {
             "label": "Link Erstellen"
-        }
+        },
+        "startText": ""
+    },
+    "victoryModal": {
+        "win": "Genius! Du hast es geschafft!",
+        "lose": "Oh nein, du hast verloren!",
+        "thanks": "Danke fürs Spielen. Sie können erneut spielen, indem Sie neu laden.",
+        "button": "neu laden"
     }
 }
