@@ -3,15 +3,15 @@
     <div class="modal">
       <div v-if="win">
         <h1 class="text-4xl">🎉</h1>
-        <p>Genius! You did it!</p>
+        <p>{{$t("victoryModal.win")}}</p>
       </div>
       <div v-else>
         <h1 class="text-4xl">😢</h1>
-        <p>Oh no, you've lost!</p>
+        <p>{{$t("victoryModal.lose")}}</p>
       </div>
-      <p>Thanks for playing. You can play again by reloading.</p>
+      <p>{{$t("victoryModal.thanks")}}</p>
       <button class="bg-blue-500 hover:bg-blue-700 text-white text-sm px-2 py-1 rounded m-4">
-        <a href=".">reload</a>
+        <a href=".">{{$t("victoryModal.button")}}</a>
       </button>
     </div>
   </div>
