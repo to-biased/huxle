@@ -1,7 +1,7 @@
 <template>
   <div>
     <victory-modal :finished="gameStore.isFinished" :win="gameStore.isWin" />
-    <div class="flex flex-col h-screen max-w-md mx-auto jsutify-evenly">
+    <div class="flex flex-col h-screen max-w-md mx-auto pt-28">
       <h1 class="text-center font-bold text-xl">Huxle!</h1>
       <word-row
         v-for="(guess, i) in gameStore.getGuesses"
