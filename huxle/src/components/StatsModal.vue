@@ -1,14 +1,14 @@
 <template>
     <h1 class="text-4xl">Stats</h1>
     <p>Guesses: {{ gameStore.getGuessIndex }}</p>
-    <div v-for="(guess, index) in gameStore.getGuesses">{{guess}}</div>
-    <div>
+    <div class="flex flex-col h-92 w-56 mx-auto">
         <word-row 
             v-for="(guess, i) in gameStore.getGuesses"
             :key="i"
             :value="guess"
             :prompt="gameStore.getPrompt"
             :submitted="i < gameStore.getGuessIndex"
+            size="sm"
         />
     </div>
     <button class="bg-blue-500 hover:bg-blue-700 text-white text-sm px-2 py-1 rounded m-4" @click="copyToClipboard">
