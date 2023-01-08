@@ -1,6 +1,6 @@
 <template>
   <div>
-    <victory-modal :finished="gameStore.isFinished" :win="gameStore.isWin" />
+    <victory-modal :finished="gameStore.isFinished" :win="gameStore.isWin" :stats="gameStore.getStats" :result="gameStore.getResult"/>
     <div class="flex flex-col h-screen max-w-md mx-auto pt-28">
       <h1 class="text-center font-bold text-xl">Huxle!</h1>
       <word-row
@@ -9,6 +9,7 @@
         :value="guess"
         :prompt="gameStore.getPrompt"
         :submitted="i < gameStore.getGuessIndex"
+        size="lg"
       />
       <simple-keyboard
         @onKeyPress="handleInput"
@@ -32,7 +33,13 @@ onMounted(() => {
   // handle input from hardware keyboard
   window.addEventListener("keyup", (e) => {
     e.preventDefault();
-    handleInput(e.key);
+    let key =
+      e.keyCode == 13
+        ? "{enter}"
+        : e.keyCode == 8
+        ? "{bksp}"
+        : String.fromCharCode(e.keyCode).toLowerCase();
+    handleInput(key);
   });
   //if localstorage has game, set it to gameStore
   const game = localStorage.getItem("game");
@@ -47,7 +54,12 @@ onMounted(() => {
 watch(
   gameStore,
   (gameStore) => {
-    if (gameStore.isFinished) return;
+    if (gameStore.isFinished) {
+      setTimeout(() => {
+          gameStore.showStats();
+      }, 2000); 
+      return;
+    }
     localStorage.setItem("game", JSON.stringify(gameStore.getGameState));
   },
   { deep: true }
@@ -62,9 +74,9 @@ const handleInput = (key: string) => {
   }
   const currentGuess = gameStore.getCurrentGuess() ?? "";
   // handle backspace and enter
-  if (key == "Backspace") {
+  if (key == "{bksp}") {
     gameStore.backspace();
-  } else if (key == "Enter") {
+  } else if (key == "{enter}") {
     // submit guess if size is 5
     if (currentGuess.length == 5) {
       gameStore.incGuessIndex();
@@ -98,6 +110,7 @@ const handleInput = (key: string) => {
         localStorage.removeItem("game");
         console.log("You lost!");
       }
+      gameStore.addNewLine();
     }
   } else if (currentGuess.length < 5) {
     // check and handle letter input

@@ -6,6 +6,12 @@ export type ColoredLetters = {
   green: string[]; // letters in prompt and guessed correctly
 };
 
+const Colors = {
+  Green: "🟩",
+  Yellow: "🟨",
+  Gray: "⬜"
+};
+
 export type GameState = {
   prompt: string;
   guesses: string[];
@@ -13,6 +19,8 @@ export type GameState = {
   letters: ColoredLetters;
   win: boolean;
   lose: boolean;
+  stats: boolean;
+  result: string[];
 };
 
 export const useGameStore = defineStore("game", {
@@ -24,6 +32,8 @@ export const useGameStore = defineStore("game", {
       letters: { gray: [], yellow: [], green: [] },
       win: false,
       lose: false,
+      stats: false,
+      result: []
     } as GameState,
   }),
   getters: {
@@ -47,6 +57,12 @@ export const useGameStore = defineStore("game", {
     },
     isWin(): boolean {
       return this.gameState.win;
+    },
+    getStats(): boolean {
+      return this.gameState.stats;
+    },
+    getResult(): string[] {
+      return this.gameState.result;
     }
   },
   actions: {
@@ -59,6 +75,9 @@ export const useGameStore = defineStore("game", {
     lose() {
       this.gameState.lose = true;
     },
+    showStats() {
+      this.gameState.stats = true;
+    },
     setPrompt(prompt: string) {
       this.gameState.prompt = prompt;
     },
@@ -70,12 +89,18 @@ export const useGameStore = defineStore("game", {
     },
     addGrayLetter(letter: string) {
       this.gameState.letters.gray.push(letter);
+      this.gameState.result.push(Colors.Gray);
     },
     addYellowLetter(letter: string) {
       this.gameState.letters.yellow.push(letter);
+      this.gameState.result.push(Colors.Yellow);
     },
     addGreenLetter(letter: string) {
       this.gameState.letters.green.push(letter);
+      this.gameState.result.push(Colors.Green);
+    },
+    addNewLine() {
+      this.gameState.result.push('\n');
     },
     backspace() {
       const guessIndex = this.gameState.guessIndex;

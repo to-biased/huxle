@@ -1,0 +1,23 @@
+{
+    "dashboard": {
+        "title": "Dashboard"
+    },
+    "languages": {
+        "de": "Deutsch",
+        "en": "English"
+    },
+    "adminForm": {
+        "title": {
+            "label": "Neues Huxle erstellen"
+        },
+        "de": {
+            "label": "Deutsch"
+        },
+        "en": {
+            "label": "Englisch"
+        },
+        "create": {
+            "label": "Link Erstellen"
+        }
+    }
+}

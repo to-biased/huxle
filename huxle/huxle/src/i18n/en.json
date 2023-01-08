@@ -1,0 +1,30 @@
+{
+    "dashboard": {
+        "title": "Dashboard"
+    },
+    "languages": {
+        "de": "Deutsch",
+        "en": "English"
+    },
+    "adminForm": {
+        "title": {
+            "label": "Create a new Huxle"
+        },
+        "de": {
+            "label": "German Word"
+        },
+        "en": {
+            "label": "English Word"
+        },
+        "create": {
+            "label": "Create Link"
+        },
+        "startText": "To start a german game, please change the language on the right side of the header"
+    },
+    "victoryModal": {
+        "win": "Genius! You did it!",
+        "lose": "Oh no, you've lost!",
+        "thanks": "Thanks for playing. You can play again by reloading.",
+        "button": "reload"
+    }
+}
