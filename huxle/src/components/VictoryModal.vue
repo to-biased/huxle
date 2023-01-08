@@ -1,15 +1,20 @@
 <template>
   <div v-if="finished" class="w-full h-full bg-[rgba(0,0,0,0.3)]">
     <div class="modal">
-      <div v-if="win">
-        <h1 class="text-4xl">🎉</h1>
-        <p>{{$t("victoryModal.win")}}</p>
+      <div v-if="stats === false">
+        <div v-if="win">
+          <h1 class="text-4xl">🎉</h1>
+          <p>{{$t("victoryModal.win")}}</p>
+        </div>
+        <div v-else>
+          <h1 class="text-4xl">😢</h1>
+          <p>{{$t("victoryModal.lose")}}</p>
+        </div>
+        <p>{{$t("victoryModal.thanks")}}</p>
       </div>
       <div v-else>
-        <h1 class="text-4xl">😢</h1>
-        <p>{{$t("victoryModal.lose")}}</p>
+        <StatsModal :result="result"></StatsModal>
       </div>
-      <p>{{$t("victoryModal.thanks")}}</p>
       <button class="bg-blue-500 hover:bg-blue-700 text-white text-sm px-2 py-1 rounded m-4">
         <a href=".">{{$t("victoryModal.button")}}</a>
       </button>
@@ -18,6 +23,8 @@
 </template>
 
 <script setup lang="ts">
+import StatsModal from './StatsModal.vue';
+
 const props = defineProps({
   win: {
     type: Boolean,
@@ -27,6 +34,14 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  stats: {
+    type: Boolean, 
+    default: false,
+  },
+  result: {
+    type: Array,
+    default: () => [""]
+  }
 });
 </script>
 
