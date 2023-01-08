@@ -32,13 +32,7 @@ onMounted(() => {
   // handle input from hardware keyboard
   window.addEventListener("keyup", (e) => {
     e.preventDefault();
-    let key =
-      e.keyCode == 13
-        ? "{enter}"
-        : e.keyCode == 8
-        ? "{bksp}"
-        : String.fromCharCode(e.keyCode).toLowerCase();
-    handleInput(key);
+    handleInput(e.key);
   });
   //if localstorage has game, set it to gameStore
   const game = localStorage.getItem("game");
@@ -68,9 +62,9 @@ const handleInput = (key: string) => {
   }
   const currentGuess = gameStore.getCurrentGuess() ?? "";
   // handle backspace and enter
-  if (key == "{bksp}") {
+  if (key == "Backspace") {
     gameStore.backspace();
-  } else if (key == "{enter}") {
+  } else if (key == "Enter") {
     // submit guess if size is 5
     if (currentGuess.length == 5) {
       gameStore.incGuessIndex();
