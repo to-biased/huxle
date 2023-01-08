@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { reactive, ref, watch } from "vue";
+import { provide, reactive, ref, watch } from "vue";
 import { useEncryption } from "../composables/encryption";
+import ShareLinkModal from "../components/ShareLinkModal.vue";
+import { useI18n } from "vue-i18n";
 
 const formState = reactive({
   germanword: "",
@@ -10,12 +12,16 @@ const formState = reactive({
 const germanError = ref<string>("");
 const englishError = ref<string>("");
 
+const { locale } = useI18n();
+
 var errorCount: number = 0;
 
 const { encrypt, decrypt } = useEncryption();
 
-async function onSubmit(e:MouseEvent) 
-{ 
+const showLinkModal = ref<boolean>(false);
+provide("showLinkModal", showLinkModal);
+
+async function onSubmit(e: MouseEvent) {
   e.preventDefault();
   console.log("Submit Event happened.");
 
@@ -47,13 +53,14 @@ async function onSubmit(e:MouseEvent)
     return;
   }
 
-  var combination: string = formState.germanword + formState.englishword;
+  var combination: string = formState.germanword + formState.englishword + locale.value;
   console.log(combination);
   var encryptedMessage = encrypt(combination);
   console.log(encryptedMessage);
   var decryptedMessage = decrypt(encryptedMessage);
   console.log(decryptedMessage);
-  germanError.value = decryptedMessage;
+  localStorage.setItem("inviteLink", encryptedMessage);
+  showLinkModal.value = true;
 }
 
 watch(
@@ -76,41 +83,47 @@ watch(
 </script>
 
 <template>
-  <div class="flex flex-col h-screen max-w-md mx-auto pt-28">
-    <p>
-      To start a german game, please change the language on the right side of
-      the header
-    </p>
-    <form @submit.prevent="async() => onSubmit" class="flex flex-col gap-4 mt-5">
-      <div>
-        <label for="germanword">German Word</label>
-        <input
-          id="germanword"
-          type="text"
-          v-model="formState.germanword"
-          class="w-full border border-gray-500 rounded px-2 py-1"
-        />
-        <p class="a text-red-600">{{ germanError }}</p>
-      </div>
-
-      <div>
-        <label for="englishword">English Word</label>
-        <input
-          id="englishword"
-          type="text"
-          v-model="formState.englishword"
-          class="w-full border border-gray-500 rounded px-2 py-1"
-        />
-        <p class="a text-red-600">{{ englishError }}</p>
-      </div>
-
-      <button
-        @click="onSubmit"
-        type="submit"
-        class="rounded border border-gray-500 px-2 py-1 hover:opacity-60"
+  <div>
+    <ShareLinkModal />
+    <div class="flex flex-col h-screen max-w-md mx-auto pt-28">
+      <p>
+        To start a german game, please change the language on the right side of
+        the header
+      </p>
+      <form
+        @submit.prevent="async () => onSubmit"
+        class="flex flex-col gap-4 mt-5"
       >
-        Create Link
-      </button>
-    </form>
+        <div>
+          <label for="germanword">German Word</label>
+          <input
+            id="germanword"
+            type="text"
+            v-model="formState.germanword"
+            class="w-full border border-gray-500 rounded px-2 py-1"
+          />
+          <p class="a text-red-600">{{ germanError }}</p>
+        </div>
+
+        <div>
+          <label for="englishword">English Word</label>
+          <input
+            id="englishword"
+            type="text"
+            v-model="formState.englishword"
+            class="w-full border border-gray-500 rounded px-2 py-1"
+          />
+          <p class="a text-red-600">{{ englishError }}</p>
+        </div>
+
+        <button
+          @click="onSubmit"
+          type="submit"
+          class="rounded border border-gray-500 px-2 py-1 hover:opacity-60"
+        >
+          Create Link
+        </button>
+      </form>
+    </div>
   </div>
 </template>
