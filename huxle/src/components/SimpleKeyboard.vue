@@ -31,12 +31,11 @@ onMounted(() => {
       default: [
         "q w e r t z u i o p",
         "a s d f g h j k l",
-        "{enter} y x c v b n m {bksp}",
+        "Enter y x c v b n m Backspace",
       ],
     },
     display: {
-      "{bksp}": "⌫",
-      "{enter}": "Enter",
+      "Backspace": "⌫",
     },
     onKeyPress: onKeyPress,
   });
