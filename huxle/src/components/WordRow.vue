@@ -1,15 +1,10 @@
 <template>
-  <div class="grid max-w-xs grid-cols-5 mx-auto "
-  :class="{
-      'gap-[4px] mb-4': size == 'lg',
-      'gap-[4px] mb-1': size == 'sm',
-    }">
+  <div class="grid max-w-xs grid-cols-5 gap-4 mx-auto mb-4">
     <letter-container
       v-for="i in 5"
       :key="i"
       :letter="value![i - 1]"
       :color="colors[i - 1]"
-      :size="size"
     />
   </div>
 </template>
@@ -21,7 +16,6 @@ const props = defineProps({
   value: String,
   prompt: String,
   submitted: Boolean,
-  size: String,
 });
 const colors = ref(["", "", "", "", ""]);
 watch(

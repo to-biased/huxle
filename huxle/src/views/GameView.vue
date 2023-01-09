@@ -1,7 +1,7 @@
 <template>
   <div>
     <victory-modal :finished="gameStore.isFinished" :win="gameStore.isWin" />
-    <div class="flex flex-col h-screen max-w-md mx-auto pt-28">
+    <div class="flex flex-col h-screen max-w-md mx-auto jsutify-evenly">
       <h1 class="text-center font-bold text-xl">Huxle!</h1>
       <word-row
         v-for="(guess, i) in gameStore.getGuesses"
@@ -62,9 +62,9 @@ const handleInput = (key: string) => {
   }
   const currentGuess = gameStore.getCurrentGuess() ?? "";
   // handle backspace and enter
-  if (key == "Backspace") {
+  if (key === 'Backspace') {
     gameStore.backspace();
-  } else if (key == "Enter") {
+  } else if (key === 'Enter') {
     // submit guess if size is 5
     if (currentGuess.length == 5) {
       gameStore.incGuessIndex();

@@ -1,11 +1,9 @@
 <template>
   <div>
-    <ApplicationHeader />
-    <RouterView/>
+    <GameView />
   </div>
 </template>
-
 <script setup lang="ts">
-import ApplicationHeader from "./components/ApplicationHeader.vue";
+import GameView from "./views/GameView.vue";
 </script>
 <style scoped></style>
