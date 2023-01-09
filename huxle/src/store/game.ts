@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { i18n } from "../i18n";
 
 export type ColoredLetters = {
   gray: string[]; // letters not in prompt
@@ -7,7 +8,8 @@ export type ColoredLetters = {
 };
 
 export type GameState = {
-  prompt: string;
+  promptDE: string;
+  promptEN: string;
   guesses: string[];
   guessIndex: number;
   letters: ColoredLetters;
@@ -18,7 +20,8 @@ export type GameState = {
 export const useGameStore = defineStore("game", {
   state: () => ({
     gameState: {
-      prompt: "",
+      promptDE: "",
+      promptEN: "",
       guesses: ["", "", "", "", "", ""],
       guessIndex: 0,
       letters: { gray: [], yellow: [], green: [] },
@@ -31,7 +34,9 @@ export const useGameStore = defineStore("game", {
       return this.gameState;
     },
     getPrompt(): string {
-      return this.gameState.prompt;
+      return i18n.global.locale.value == "de"
+        ? this.gameState.promptDE
+        : this.gameState.promptEN;
     },
     getGuesses(): string[] {
       return this.gameState.guesses;
@@ -47,7 +52,7 @@ export const useGameStore = defineStore("game", {
     },
     isWin(): boolean {
       return this.gameState.win;
-    }
+    },
   },
   actions: {
     setGameState(gameState: GameState) {

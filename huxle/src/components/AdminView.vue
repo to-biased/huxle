@@ -16,7 +16,7 @@ const { locale } = useI18n();
 
 var errorCount: number = 0;
 
-const { encrypt, decrypt } = useEncryption();
+const { encrypt } = useEncryption();
 
 const showLinkModal = ref<boolean>(false);
 provide("showLinkModal", showLinkModal);
@@ -53,12 +53,9 @@ async function onSubmit(e: MouseEvent) {
     return;
   }
 
-  var combination: string = formState.germanword + formState.englishword + locale.value;
-  console.log(combination);
+  var combination: string =
+    formState.germanword + formState.englishword + locale.value;
   var encryptedMessage = encrypt(combination);
-  console.log(encryptedMessage);
-  var decryptedMessage = decrypt(encryptedMessage);
-  console.log(decryptedMessage);
   localStorage.setItem("inviteLink", encryptedMessage);
   showLinkModal.value = true;
 }

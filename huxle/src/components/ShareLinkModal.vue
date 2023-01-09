@@ -5,7 +5,6 @@ const show: Ref<boolean> = inject("showLinkModal");
 const text: Ref<string> = ref<string>("");
 
 function copy() {
-  //this.$refs.myinput.focus();
   if (navigator.clipboard) {
     navigator.clipboard
       .writeText(text.value)
@@ -40,11 +39,21 @@ function toggleModal() {
     v-show="show"
     class="flex absolute items-center justify-center w-full h-full bg-gray-500 bg-opacity-75 transition-opacity"
   >
-    <div class="rounded-lg bg-white">
-      <p>Link to share:</p>
-      <button @click="toggleModal">X</button>
-      <input ref="myinput" readonly :value="text" />
-      <button @click="copy">Copy</button>
+    <div class="grid grid-cols-3 gap-4 rounded-lg border border-black bg-white">
+      <div class="col-span-2 m-1">
+        <p>Link to share:</p>
+      </div>
+      <div class="m-1 text-right pr-2">
+        <button @click="toggleModal">X</button>
+      </div>
+      <div class="col-span-2 m-2 border border-slate-500">
+        <input ref="myinput" readonly :value="text" />
+      </div>
+      <div class="">
+        <button class="border border-slate-500 p-1 rounded" @click="copy">
+          Copy
+        </button>
+      </div>
     </div>
   </div>
 </template>
