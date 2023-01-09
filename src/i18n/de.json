@@ -7,8 +7,8 @@
         "en": "English"
     },
     "adminForm": {
-        "title": {
-            "label": "Neues Huxle erstellen"
+        "description": {
+            "label": "Um ein Englisches Spiel zu starten, ändern Sie bitte die Sprache auf der rechten Seite des Headers"
         },
         "de": {
             "label": "Deutsches Wort"
@@ -22,9 +22,9 @@
         "startText": ""
     },
     "victoryModal": {
-        "win": "Genius! Du hast es geschafft!",
+        "win": "Genie! Du hast es geschafft!",
         "lose": "Oh nein, du hast verloren!",
         "thanks": "Danke fürs Spielen. Sie können erneut spielen, indem Sie neu laden.",
-        "button": "neu laden"
+        "button": "Neues Spiel"
     }
 }

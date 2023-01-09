@@ -50,8 +50,8 @@ function toggleModal() {
         <input ref="myinput" readonly :value="text" />
       </div>
       <div class="">
-        <button class="border border-slate-500 p-1 rounded" @click="copy">
-          Copy
+        <button class="border border-slate-500 p-1 rounded bg-blue-500 hover:bg-blue-700 text-white" @click="copy">
+          📋
         </button>
       </div>
     </div>

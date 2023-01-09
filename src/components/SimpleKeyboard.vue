@@ -4,12 +4,12 @@
 <script setup lang="ts">
 import Keyboard from "simple-keyboard";
 import "simple-keyboard/build/css/index.css";
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, Ref } from "vue";
 
 const emit = defineEmits(["onKeyPress"]);
 
 const props = defineProps({
-  letters: Object,
+  letters: {},
 });
 
 /*
@@ -25,7 +25,7 @@ const onKeyPress = (button: string) => {
   emit("onKeyPress", button);
 };
 
-onMounted(() => {
+const resetKeyboard = () => {
   keyboard.value = new Keyboard("simple-keyboard", {
     layout: {
       default: [
@@ -35,19 +35,32 @@ onMounted(() => {
       ],
     },
     display: {
-      "Backspace": "⌫",
+      Backspace: "⌫",
+      Enter: "⤶",
     },
     onKeyPress: onKeyPress,
   });
+};
+
+onMounted(() => {
+  resetKeyboard();
 });
 // watch for changes in props.letters and update keyboard theme to colors in props.letters
 watch(
   () => props.letters,
   (letters) => {
-    if (keyboard.value != null && keyboard.value != null) {
-      keyboard.value.addButtonTheme(letters?.gray.join(" "), "gray"),
-        keyboard.value.addButtonTheme(letters?.yellow.join(" "), "yellow"),
-        keyboard.value.addButtonTheme(letters?.green.join(" "), "green");
+    if (
+      !letters?.gray.length &&
+      !letters?.yellow.length &&
+      !letters?.green.length
+    ) {
+      keyboard.value.resetRows();
+      resetKeyboard();
+    }
+    if (keyboard.value != null) {
+      keyboard.value.addButtonTheme(letters?.gray.join(" "), "gray");
+      keyboard.value.addButtonTheme(letters?.yellow.join(" "), "yellow");
+      keyboard.value.addButtonTheme(letters?.green.join(" "), "green");
     }
   },
   { deep: true }

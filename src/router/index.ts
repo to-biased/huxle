@@ -28,10 +28,12 @@ router.beforeEach((to, from) => {
   }
   var hash = to.fullPath.substring(1);
   if (!hash) {
+    console.log(":(")
     return false;
   }
   var decryptedHash: string = decrypt(hash);
   if (decryptedHash.length != 12) {
+    console.log(":D")
     return false;
   }
   var germanWord = decryptedHash.substring(0, 5);

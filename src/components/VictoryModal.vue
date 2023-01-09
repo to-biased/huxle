@@ -1,6 +1,6 @@
 <template>
-  <div v-if="finished" class="w-full h-full bg-[rgba(0,0,0,0.3)]">
-    <div class="modal">
+  <div v-if="finished" class="flex justify-center fixed w-screen h-screen bg-opacity-75 bg-gray-500 transition-opacity">
+    <div class="modal min-w-[16rem] m-auto">
       <div v-if="stats === false">
         <div v-if="win">
           <h1 class="text-4xl">🎉</h1>
@@ -47,7 +47,7 @@ const props = defineProps({
 
 <style scoped lang="postcss">
 div.modal {
-  @apply fixed w-1/2 mx-auto inset-x-0 top-1/3 text-center p-4;
+  @apply fixed w-1/2 inset-x-0 top-1/3 text-center p-4;
   @apply bg-white border border-gray-300 rounded-lg shadow-lg;
 }
 p {

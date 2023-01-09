@@ -80,6 +80,15 @@ export const useGameStore = defineStore("game", {
     lose() {
       this.gameState.lose = true;
     },
+    reset(){
+      this.gameState.guesses= ["", "", "", "", "", ""];
+      this.gameState.guessIndex= 0;
+      this.gameState.letters= { gray: [], yellow: [], green: [] };
+      this.gameState.win= false;
+      this.gameState.lose= false;
+      this.gameState.stats= false;
+      this.gameState.result= [];
+    },
     showStats() {
       this.gameState.stats = true;
     },

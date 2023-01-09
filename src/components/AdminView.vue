@@ -23,6 +23,7 @@ provide("showLinkModal", showLinkModal);
 
 async function onSubmit(e: MouseEvent) {
   e.preventDefault();
+  errorCount=0;
   console.log("Submit Event happened.");
 
   if (!formState.germanword) {
@@ -82,17 +83,16 @@ watch(
 <template>
   <div>
     <ShareLinkModal />
-    <div class="flex flex-col h-screen max-w-md mx-auto pt-28">
+    <div class="flex flex-col h-screen max-w-md mx-auto pt-28 px-2">
       <p>
-        To start a german game, please change the language on the right side of
-        the header
+        {{$t("adminForm.description.label")}}
       </p>
       <form
         @submit.prevent="async () => onSubmit"
         class="flex flex-col gap-4 mt-5"
       >
         <div>
-          <label for="germanword">German Word</label>
+          <label for="germanword">{{$t("adminForm.de.label")}}</label>
           <input
             id="germanword"
             type="text"
@@ -103,7 +103,7 @@ watch(
         </div>
 
         <div>
-          <label for="englishword">English Word</label>
+          <label for="englishword">{{$t("adminForm.en.label")}}</label>
           <input
             id="englishword"
             type="text"
@@ -116,9 +116,9 @@ watch(
         <button
           @click="onSubmit"
           type="submit"
-          class="rounded border border-gray-500 px-2 py-1 hover:opacity-60"
+          class="rounded border border-gray-500 px-2 py-1 bg-blue-500 hover:bg-blue-700 text-white"
         >
-          Create Link
+          {{$t("adminForm.create.label")}}
         </button>
       </form>
     </div>

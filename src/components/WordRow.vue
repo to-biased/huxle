@@ -15,8 +15,9 @@
 </template>
 
 <script setup lang="ts">
+import { inject, Ref, ref, watch } from "vue";
 import LetterContainer from "./LetterContainer.vue";
-import { ref, watch } from "vue";
+
 const props = defineProps({
   value: String,
   prompt: String,
@@ -24,6 +25,18 @@ const props = defineProps({
   size: String,
 });
 const colors = ref(["", "", "", "", ""]);
+
+const forceRedraw:Ref<boolean> = inject("forceRedraw");
+watch(forceRedraw, (newV, oldV) => {
+  if (newV) {
+    reset();
+  }
+})
+
+function reset() {
+  colors.value = ["", "", "", "", ""]
+}
+
 watch(
   () => props.submitted,
   async (submitted) => {
@@ -52,6 +65,8 @@ watch(
         colors.value[i] = temp[i];
         await new Promise((resolve) => setTimeout(resolve, 300)); // wait 300ms to slow the reveal
       }
+    } else {
+      reset();
     }
   },
   { immediate: true }

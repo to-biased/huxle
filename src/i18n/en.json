@@ -7,8 +7,8 @@
         "en": "English"
     },
     "adminForm": {
-        "title": {
-            "label": "Create a new Huxle"
+        "description": {
+            "label": "To start a german game, please change the language on the right side of the header"
         },
         "de": {
             "label": "German Word"
@@ -25,6 +25,6 @@
         "win": "Genius! You did it!",
         "lose": "Oh no, you've lost!",
         "thanks": "Thanks for playing. You can play again by reloading.",
-        "button": "reload"
+        "button": "New Game"
     }
 }

@@ -7,7 +7,6 @@
       :result="gameStore.getResult"
     />
     <div class="flex flex-col h-screen max-w-md mx-auto pt-28">
-      <h1 class="text-center font-bold text-xl">Huxle!</h1>
       <word-row
         v-for="(guess, i) in gameStore.getGuesses"
         :key="i"
@@ -24,13 +23,16 @@
   </div>
 </template>
 <script setup lang="ts">
-import { onMounted, watch } from "vue";
+import { onMounted, provide, ref, Ref, watch } from "vue";
 import SimpleKeyboard from "../components/SimpleKeyboard.vue";
 import VictoryModal from "../components/VictoryModal.vue";
 import WordRow from "../components/WordRow.vue";
 import { useGameStore, type GameState } from "../store/game";
 
 const gameStore = useGameStore();
+
+const visualReset:Ref<boolean> = ref<boolean>(false);
+provide("forceRedraw", visualReset);
 
 // tries to find promts from local storage
 const promts = JSON.parse(localStorage.getItem("promts") ?? "{}");
@@ -118,8 +120,8 @@ const handleInput = (key: string) => {
     }
   } else if (currentGuess.length < 5) {
     // check and handle letter input
-    const isLetter = /[a-zA-Z]/;
-    if (isLetter.test(key)) {
+    const isLetter = new RegExp(/[a-zA-Z]/);
+    if (isLetter.test(key) && key.length == 1) {
       gameStore.appendGuess(key);
     }
   }
