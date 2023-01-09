@@ -65,7 +65,7 @@ watch(
   (germanWord) => {
     if (germanError.value) {
       germanError.value = "";
-    }
+    } 
   }
 );
 
