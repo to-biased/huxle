@@ -1,6 +1,14 @@
-# huxle
+# Vue.js Project - huxle
 
-This template should help get you started developing with Vue 3 in Vite.
+A Wordle Implementation written in Vue 3 called "huxle" based on Vite using Vue.js, Typescript, Tailwind and tested with Vitest. 
+
+## Team Members
+* Koessl Michael (S2210629009)
+* Mayr Simon (S2210455007)
+* Wagner Tobias (s2210629023)
+
+## Game Description
+The creator of the huxle is able to define a language and a word to guess. The word has to be exactly five characters long and has to be defined in both languages German and English. Then a Link will be created and can be sent to other players, which then are able to play the game. The rules are basically the same as for Wordle: One can make a maximum of six guesses to find the correct word, wheter you find the solution or not, you win or lose. The result can be copied and shared with others. During the game it is also possible to switch the language.
 
 ## Recommended IDE Setup
 
