@@ -1,6 +1,11 @@
 <template>
   <div>
-    <victory-modal :finished="gameStore.isFinished" :win="gameStore.isWin" :stats="gameStore.getStats" :result="gameStore.getResult"/>
+    <victory-modal
+      :finished="gameStore.isFinished"
+      :win="gameStore.isWin"
+      :stats="gameStore.getStats"
+      :result="gameStore.getResult"
+    />
     <div class="flex flex-col h-screen max-w-md mx-auto pt-28">
       <h1 class="text-center font-bold text-xl">Huxle!</h1>
       <word-row
@@ -26,7 +31,12 @@ import WordRow from "../components/WordRow.vue";
 import { useGameStore, type GameState } from "../store/game";
 
 const gameStore = useGameStore();
-gameStore.setPrompt("sicki"); // later get this from link by dehashing
+
+// tries to find promts from local storage
+const promts = JSON.parse(localStorage.getItem("promts") ?? "{}");
+if (promts.de) {
+  gameStore.setPrompt(promts.en, promts.de); // later get this from link by dehashing
+}
 
 // onload actions and listener for hardware keyboard input
 onMounted(() => {
@@ -50,8 +60,8 @@ watch(
   (gameStore) => {
     if (gameStore.isFinished) {
       setTimeout(() => {
-          gameStore.showStats();
-      }, 2000); 
+        gameStore.showStats();
+      }, 2000);
       return;
     }
     localStorage.setItem("game", JSON.stringify(gameStore.getGameState));

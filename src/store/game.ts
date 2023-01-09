@@ -83,8 +83,9 @@ export const useGameStore = defineStore("game", {
     showStats() {
       this.gameState.stats = true;
     },
-    setPrompt(prompt: string) {
-      this.gameState.prompt = prompt;
+    setPrompt(promptEN:string, promptDE: string) {
+      this.gameState.promptEN = promptEN;
+      this.gameState.promptDE = promptDE;
     },
     addGuess(guess: string) {
       this.gameState.guesses.push(guess);

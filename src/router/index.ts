@@ -7,6 +7,7 @@ import GameView from "../components/GameView.vue";
 const { decrypt } = useEncryption();
 const { locale } = i18n.global;
 
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -37,6 +38,10 @@ router.beforeEach((to, from) => {
   var englishWord = decryptedHash.substring(5, 10);
   var lang = decryptedHash.substring(10, 12);
   locale.value = lang;
+  localStorage.setItem("promts", JSON.stringify({
+    "en":englishWord,
+    "de":germanWord
+  }));
   return true;
 });
 
