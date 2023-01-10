@@ -31,14 +31,8 @@ import { useGameStore, type GameState } from "../store/game";
 
 const gameStore = useGameStore();
 
-const visualReset:Ref<boolean> = ref<boolean>(false);
+const visualReset: Ref<boolean> = ref<boolean>(false);
 provide("forceRedraw", visualReset);
-
-// tries to find promts from local storage
-const promts = JSON.parse(localStorage.getItem("promts") ?? "{}");
-if (promts.de) {
-  gameStore.setPrompt(promts.en, promts.de); // later get this from link by dehashing
-}
 
 // onload actions and listener for hardware keyboard input
 onMounted(() => {
@@ -53,6 +47,27 @@ onMounted(() => {
     let safeGame = JSON.parse(game) as GameState;
     console.log(safeGame);
     gameStore.setGameState(safeGame);
+  }
+
+  // Locate prompts in the local storage.
+  const promts = JSON.parse(localStorage.getItem("promts") ?? "{}");
+  const savedPrompts = gameStore.getPrompts;
+  // Check if prompt is set correctly.
+  if (promts.de) {
+    // Check if we got new prompts.
+    if (promts.de !== savedPrompts[0] && promts.en !== savedPrompts[1]) {
+      console.log("resetting");
+      // Reset the game if we get new prompts.
+      gameStore.reset();
+      gameStore.setPrompt(promts.en, promts.de);
+
+      // Make sure to reset the localStorage entry aswell since
+      // mounted is not established yet.
+      const game = localStorage.getItem("game");
+      if (game != null) {
+        localStorage.setItem("game", JSON.stringify(gameStore.getGameState));
+      }
+    }
   }
 });
 

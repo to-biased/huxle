@@ -10,7 +10,7 @@ export type ColoredLetters = {
 const Colors = {
   Green: "🟩",
   Yellow: "🟨",
-  Gray: "⬜"
+  Gray: "⬜",
 };
 
 export type GameState = {
@@ -36,7 +36,7 @@ export const useGameStore = defineStore("game", {
       win: false,
       lose: false,
       stats: false,
-      result: []
+      result: [],
     } as GameState,
   }),
   getters: {
@@ -47,6 +47,9 @@ export const useGameStore = defineStore("game", {
       return i18n.global.locale.value == "de"
         ? this.gameState.promptDE
         : this.gameState.promptEN;
+    },
+    getPrompts(): string[] {
+      return [this.gameState.promptDE, this.gameState.promptEN];
     },
     getGuesses(): string[] {
       return this.gameState.guesses;
@@ -68,7 +71,7 @@ export const useGameStore = defineStore("game", {
     },
     getResult(): string[] {
       return this.gameState.result;
-    }
+    },
   },
   actions: {
     setGameState(gameState: GameState) {
@@ -80,19 +83,19 @@ export const useGameStore = defineStore("game", {
     lose() {
       this.gameState.lose = true;
     },
-    reset(){
-      this.gameState.guesses= ["", "", "", "", "", ""];
-      this.gameState.guessIndex= 0;
-      this.gameState.letters= { gray: [], yellow: [], green: [] };
-      this.gameState.win= false;
-      this.gameState.lose= false;
-      this.gameState.stats= false;
-      this.gameState.result= [];
+    reset() {
+      this.gameState.guesses = ["", "", "", "", "", ""];
+      this.gameState.guessIndex = 0;
+      this.gameState.letters = { gray: [], yellow: [], green: [] };
+      this.gameState.win = false;
+      this.gameState.lose = false;
+      this.gameState.stats = false;
+      this.gameState.result = [];
     },
     showStats() {
       this.gameState.stats = true;
     },
-    setPrompt(promptEN:string, promptDE: string) {
+    setPrompt(promptEN: string, promptDE: string) {
       this.gameState.promptEN = promptEN;
       this.gameState.promptDE = promptDE;
     },
@@ -115,7 +118,7 @@ export const useGameStore = defineStore("game", {
       this.gameState.result.push(Colors.Green);
     },
     addNewLine() {
-      this.gameState.result.push('\n');
+      this.gameState.result.push("\n");
     },
     backspace() {
       const guessIndex = this.gameState.guessIndex;

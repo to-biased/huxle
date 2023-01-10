@@ -1,9 +1,11 @@
 <template>
-  <div class="grid max-w-xs grid-cols-5 mx-auto "
-  :class="{
-      'gap-[4px] mb-4': size == 'lg',
+  <div
+    class="grid max-w-[21rem] grid-cols-5 mx-auto"
+    :class="{
+      'gap-[4px] mb-2': size == 'lg',
       'gap-[4px] mb-1': size == 'sm',
-    }">
+    }"
+  >
     <letter-container
       v-for="i in 5"
       :key="i"
@@ -26,15 +28,15 @@ const props = defineProps({
 });
 const colors = ref(["", "", "", "", ""]);
 
-const forceRedraw:Ref<boolean> = inject("forceRedraw");
+const forceRedraw: Ref<boolean> = inject("forceRedraw");
 watch(forceRedraw, (newV, oldV) => {
   if (newV) {
     reset();
   }
-})
+});
 
 function reset() {
-  colors.value = ["", "", "", "", ""]
+  colors.value = ["", "", "", "", ""];
 }
 
 watch(

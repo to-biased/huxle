@@ -83,5 +83,6 @@ div.simple-keyboard {
   @apply font-bold text-xl !important;
   @apply text-gray-600 text-lg !important;
   @apply bg-white !important;
+  @apply mt-12 !important;
 }
 </style>
